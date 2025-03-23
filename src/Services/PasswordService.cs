@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using GeradorSenhas.src.Core;
 
 namespace GeradorSenhas.src.Services
 {
@@ -10,8 +11,21 @@ namespace GeradorSenhas.src.Services
                 minusculas == false &&
                 numeros == false &&
                 especiais == false) throw new ValidationException("Pelo menos uma opção deve ser selecionada");
-            
-            return string.Empty;
+                
+            string stringBase = MountStringBase(maiusculas, minusculas, numeros, especiais);
+
+            return stringBase;
+        }
+
+        private static string MountStringBase(bool maiusculas, bool minusculas, bool numeros, bool especiais)
+        {
+            var stringBase = string.Empty;
+
+            stringBase = maiusculas ? stringBase += PasswordConstants.Maiusculas : stringBase;
+            stringBase = minusculas ? stringBase += PasswordConstants.Minusculas : stringBase;
+            stringBase = numeros ? stringBase += PasswordConstants.Numeros : stringBase;
+            stringBase = especiais ? stringBase += PasswordConstants.Especiais : stringBase;
+            return stringBase;
         }
     }
 }
