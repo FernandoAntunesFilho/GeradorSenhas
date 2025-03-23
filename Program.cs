@@ -1,8 +1,12 @@
+using GeradorSenhas.src.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<PasswordService>();
 
 var app = builder.Build();
 
