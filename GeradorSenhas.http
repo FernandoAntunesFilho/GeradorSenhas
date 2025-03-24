@@ -1,0 +1,6 @@
+@GeradorSenhas_HostAddress = http://localhost:5287
+
+GET {{GeradorSenhas_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
