@@ -13,14 +13,16 @@ namespace GeradorSenhas.src.Controllers
         }
 
         [HttpGet("password")]
-        public IActionResult CreatePassword([FromQuery] bool letrasMinusculas = false,
-            bool letrasMaiusculas = false,
-            bool numeros = false,
-            bool caracteresEspeciais = false)
+        public IActionResult CreatePassword(
+            [FromQuery] int tamanho = 12,
+            [FromQuery] bool letrasMinusculas = false,
+            [FromQuery] bool letrasMaiusculas = false,
+            [FromQuery] bool numeros = false,
+            [FromQuery] bool caracteresEspeciais = false)
         {
             try
             {
-                var retorno = _service.NewPassword(letrasMaiusculas, letrasMinusculas, numeros, caracteresEspeciais);
+                var retorno = _service.NewPassword(tamanho, letrasMaiusculas, letrasMinusculas, numeros, caracteresEspeciais);
                 return Ok(retorno);
             }
             catch (Exception ex)

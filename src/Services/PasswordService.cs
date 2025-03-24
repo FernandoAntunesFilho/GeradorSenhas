@@ -6,21 +6,22 @@ namespace GeradorSenhas.src.Services
 {
     public class PasswordService
     {
-        public string NewPassword(bool maiusculas, bool minusculas, bool numeros, bool especiais)
+        public string NewPassword(int tamanho, bool maiusculas, bool minusculas, bool numeros, bool especiais)
         {
+            if (tamanho < 12 || tamanho > 50) throw new ValidationException("O tamanho da senha deve ser em 12 e 50 caracteres.");
             if (maiusculas == false &&
                 minusculas == false &&
                 numeros == false &&
-                especiais == false) throw new ValidationException("Pelo menos uma opção deve ser selecionada");
+                especiais == false) throw new ValidationException("Pelo menos uma opção deve ser selecionada.");
 
             string stringBase = MountStringBase(maiusculas, minusculas, numeros, especiais);
 
-            string senha = GeneratePassword(stringBase);
+            string senha = GeneratePassword(tamanho, stringBase);
 
             return senha;
         }
 
-        private string GeneratePassword(string stringBase)
+        private string GeneratePassword(int tamanho, string stringBase)
         {
             if (string.IsNullOrEmpty(stringBase) || stringBase.Length == 0)
                 return string.Empty;
@@ -28,7 +29,7 @@ namespace GeradorSenhas.src.Services
             Random random = new Random();
             StringBuilder resultado = new StringBuilder();
 
-            for (int i = 0; i < 12; i++)
+            for (int i = 0; i < tamanho; i++)
             {
                 char caractereAleatorio = stringBase[random.Next(stringBase.Length)];
                 resultado.Append(caractereAleatorio);
